@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Cocur\Slugify\Slugify;
 use App\Repository\PropertyRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -31,6 +32,7 @@ class Property
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Range(min=10 , max=400)
      */
     private $surface;
 
@@ -66,6 +68,7 @@ class Property
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     *  * @Assert\Regex("/^[0-9]{5}$/")
      */
     private $code_postal;
 

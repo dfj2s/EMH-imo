@@ -1,0 +1,20 @@
+{{form_start(form) }}
+<div class="row">
+<div class="col-md-4">{{form_row(form.title)}}</div>
+<div class="col-md-4">{{form_row(form.surface)}}</div>
+<div class="col-md-4">{{form_row(form.prix)}}</div>
+</div>
+<div class="row">
+<div class="col-md-4">{{form_row(form.pieces)}}</div>
+<div class="col-md-4">{{form_row(form.chambres)}}</div>
+<div class="col-md-4">{{form_row(form.etage)}}</div>
+</div>
+<div class="row">
+<div class="col-md-4">{{form_row(form.adresse)}}</div>
+<div class="col-md-2">{{form_row(form.code_postal)}}</div>
+<div class="col-md-3">{{form_row(form.city)}}</div>
+<div class="col-md-2">{{form_row(form.vendue)}}</div>
+</div>
+{{form_widget(form) }}
+<button class="btn btn-primary">{{button|default('ENregistrer')}}</button>
+{{form_end(form) }}
