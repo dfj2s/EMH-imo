@@ -17,7 +17,7 @@
     <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container-fluid">
-    <a class="navbar-brand" href={{ path('home') }}>EMH-IMO</a>
+    <a class="navbar-brand" href={{ path('home') }}>SEN LOGEMENT</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -26,6 +26,15 @@
         <li class="nav-item">
           <a class="nav-link " {% if current_menu is defined and current_menu == "properties" %} active {% endif %} href={{ path('property.index') }}>Acheter</a>
         </li>
+      </ul>
+        {% if app.user %}
+        <ul class="navbar-nav">
+        <li>
+        <a href="{{ path('app_logout') }}" class="nav-link">Se deconnecter</a>
+        </li>
+        </ul>
+        {% endif %}
+
         
     </div>
   </div>
