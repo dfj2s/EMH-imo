@@ -3,9 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Property;
+use App\Entity\RechercheBiens;
+use App\Form\RechercheBiensType;
 use App\Repository\PropertyRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use PhpParser\Node\Expr\Cast\String_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -26,12 +30,21 @@ class PropertyController extends AbstractController
     /**
      * @Route("/biens", name="property.index")
      */
-    public function index(): Response
+    public function index(PaginatorInterface $paginator ,HttpFoundationRequest $request): Response
     {
-        $property = $this->repository->findAllVIsible();
-        dd($property);
+        $recherche= new RechercheBiens();
+        $form= $this->createForm(RechercheBiensType::class,$recherche);
+        $form->handleRequest($request);
+        $properties = $paginator->paginate(
+            $this->repository->findAllVIsibleQuery($recherche),
+        $request->query->getInt('page',1),
+        12
+        );
+    
         return $this->render('property/index.html.twig', [
             'current_menu' => 'properties',
+            'properties'=>$properties ,
+            'form' =>$form->createView()
         ]);
     }
     /** 

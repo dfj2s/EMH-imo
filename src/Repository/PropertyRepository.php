@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Property;
+use App\Entity\RechercheBiens;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ORM\Query;
@@ -21,12 +22,26 @@ class PropertyRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Property::class);
     }
-    public function findAllVIsible()
+    public function findAllVIsibleQuery(RechercheBiens $recherche ):Query
     {
-        return $this->findVisibleQuery()
-        ->where("p.vendue=false")
-        ->getQuery()
-        ->getResult();
+        $query = $this->findVisibleQuery() ;
+
+        if ($recherche->getPrixMax())
+        {
+          $query = $query
+              -> andWhere('p.prix <= :prixMax')
+              ->setParameter('prixMax',$recherche->getPrixMax());
+
+        }
+        if ($recherche->getSurfaceMin())
+        {
+          $query = $query
+              -> andWhere('p.surface >= :surfacemin')
+              ->setParameter('surfacemin',$recherche->getSurfaceMin());
+
+        }
+
+        return $query->getQuery();
     }
     public function findLatest()
     {
