@@ -5,7 +5,6 @@ namespace App\Repository;
 use App\Entity\Property;
 use App\Entity\RechercheBiens;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder as ORMQueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -40,6 +39,18 @@ class PropertyRepository extends ServiceEntityRepository
               ->setParameter('surfacemin',$recherche->getSurfaceMin());
 
         }
+        if ($recherche->getOptions()->count() > 0)
+        {
+            $k=0;
+            foreach($recherche->getOptions() as $k => $option) {
+            $k++;
+            $query = $query
+                -> andWhere(":option$k MEMBER OF p.options")
+                ->setParameter("option$k",$option);
+            }
+
+  
+          }
 
         return $query->getQuery();
     }

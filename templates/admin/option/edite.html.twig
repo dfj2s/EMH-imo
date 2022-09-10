@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editer LES OPTIONS{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+<h1>Editer les Options </h1>
+{{include('admin/option/_form.html.twig',{form :form , button : 'Modifier'} )}}
+
+
+</div>
+{% endblock %}
